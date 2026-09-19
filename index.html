@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Nova Games</title>
+<style>
+*{box-sizing:border-box}body{margin:0;font-family:Arial,sans-serif;background:#0f172a;color:#f8fafc}
+header{padding:24px 20px;text-align:center;background:#111827;border-bottom:1px solid #334155}
+h1{margin:0 0 8px;font-size:38px}.sub{color:#94a3b8}
+.search{display:block;width:min(650px,90%);margin:20px auto 0;padding:14px 20px;border-radius:28px;border:1px solid #475569;background:#1e293b;color:#fff;font-size:16px;outline:none}
+main{max-width:1000px;margin:auto;padding:28px 20px}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px}
+.card{background:#1e293b;border:1px solid #334155;border-radius:14px;padding:20px}.card h2{margin:0 0 8px}.card p{color:#94a3b8;min-height:42px}
+button{border:0;border-radius:9px;padding:11px 15px;background:#3b82f6;color:#fff;font-weight:bold;cursor:pointer}
+button:hover{filter:brightness(1.1)}
+.note{margin:25px 0;padding:15px;border-radius:10px;background:#172033;color:#cbd5e1}
+#status{text-align:center;color:#94a3b8;margin-top:20px}
+</style>
+</head>
+<body>
+<header>
+<h1>🎮 Nova Games</h1>
+<div class="sub">A simple game portal for games that are permitted on your network.</div>
+<input id="search" class="search" placeholder="Search games..." autocomplete="off">
+</header>
+<main>
+<div class="note">Only add or play games that your school permits. This site does not bypass school network restrictions.</div>
+<div id="games" class="grid"></div>
+<div id="status"></div>
+</main>
+<script>
+const games=[
+ {name:"Game 1",desc:"Replace this with a game your school allows.",url:"https://example.com"},
+ {name:"Game 2",desc:"Add another permitted game here.",url:"https://example.com"},
+ {name:"Game 3",desc:"Add your own game link.",url:"https://example.com"},
+ {name:"Game 4",desc:"Another game slot for your portal.",url:"https://example.com"}
+];
+const box=document.getElementById("games"), search=document.getElementById("search"), status=document.getElementById("status");
+function draw(){
+ const q=search.value.toLowerCase();
+ const found=games.filter(g=>g.name.toLowerCase().includes(q)||g.desc.toLowerCase().includes(q));
+ box.innerHTML=found.map(g=>`<article class="card"><h2>🕹️ ${g.name}</h2><p>${g.desc}</p><button onclick="window.open('${g.url}','_blank')">Play</button></article>`).join("");
+ status.textContent=found.length?`${found.length} game${found.length===1?"":"s"} shown`:"No games found";
+}
+search.addEventListener("input",draw);draw();
+</script>
+</body>
+</html>
